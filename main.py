@@ -16,7 +16,7 @@ def main():
             pass
         elif opcion == "4":
             print()
-            print("Saliendo del sistema...")
+            print("Saliendo del sistema...")    
             print()
             break
         else:
