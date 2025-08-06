@@ -11,6 +11,7 @@ class Obra:
         self.imagen_url = imagen_url
 
     def mostrar_detalles(self):
+        print()
         print("Detalles de la Obra seleccionada: ")
         print("ID:",self.id)
         print("Título: ",self.titulo)
@@ -21,3 +22,4 @@ class Obra:
         print("Tipo: ",self.tipo)
         print("Año de creación: ",self.fecha_creacion)
         print("Imagen de la obra: ",self.imagen_url)
+        print()

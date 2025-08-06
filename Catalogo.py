@@ -1,15 +1,14 @@
 import requests
 import json 
 
-
 def obtener_departamentos ():
     departamento = requests.get("https://collectionapi.metmuseum.org/public/collection/v1/departments")
 
     datos = departamento.json()
 
-    #print(json.dumps(datos, indent = 4))
+    # print(json.dumps(datos, indent = 4))
 
-    return datos 
+    return datos
 
 def obtener_obras_por_departamento(num):
     obras = requests.get(f"https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds={num}")
