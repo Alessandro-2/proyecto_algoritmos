@@ -11,12 +11,12 @@ def main():
         if opcion == "1":
             funciones_catalogo.ver_obras_por_departamento()
         elif opcion == "2":
-            print("hola mundo, probando primer commit")
+            pass
         elif opcion == "3":
             pass
         elif opcion == "4":
             print()
-            print("Saliendo del sistema...")
+            print("Saliendo del sistema...")    
             print()
             break
         else:
