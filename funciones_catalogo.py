@@ -76,3 +76,36 @@ def mostrar_detalles_opcion(obras):
             
         else:
             print("Error, por favor, ingrese un ID de obra válido o '2' para regresar")
+
+
+def ver_obras_por_nacionalidad():
+
+    nacionalidades=[]
+
+    try:
+        with open("CH_Nationality_List_20171130_v1.csv", encoding="utf-8") as archivo:
+            lector = csv.reader(archivo)
+            for fila in lector:
+                if fila and fila[0].strip() != "":
+                    nacionalidades.append(fila[0].strip())
+    except:
+        print("No se pudo leer el archivo de nacionalidades de los autores.")
+        return
+    
+    for i, nacionalidad in enumerate(nacionalidades):
+        print(f"{i + 1}. {nacionalidad}")
+
+    seleccion = input("Ingrese el número de la nacionalidad: ")
+    if not seleccion.isnumeric():
+        print("Valor inválido.")
+        return
+    
+    indice = int(seleccion) - 1
+    if indice < 0 or indice >= len(nacionalidades):
+        print("Número fuera de rango.")
+        return
+    
+    valor = nacionalidades[indice]
+    url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={valor}"
+    importar_y_mostrar_ids(url)
+
