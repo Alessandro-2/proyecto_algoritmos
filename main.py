@@ -11,7 +11,7 @@ def main():
         if opcion == "1":
             funciones_catalogo.ver_obras_por_departamento()
         elif opcion == "2":
-            pass
+            funciones_catalogo.ver_obras_por_nacionalidad()
         elif opcion == "3":
             funciones_catalogo.ver_obras_por_autor()
         elif opcion == "4":

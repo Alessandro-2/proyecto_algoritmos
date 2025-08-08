@@ -214,7 +214,7 @@ def mostrar_listado_obras(object_ids):
 
         inicio += 20
         if inicio < total:
-            continuar = input("¿Desea ver más obras? (s/n): ")
-            if continuar.lower() != "s":
+            continuar = input("¿Desea ver más obras? (si/no): ")
+            if continuar.lower() != "si":
                 break
 
