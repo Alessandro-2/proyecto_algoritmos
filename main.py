@@ -11,7 +11,7 @@ def main():
         if opcion == "1":
             funciones_catalogo.ver_obras_por_departamento()
         elif opcion == "2":
-            print("Probando actualizacion correo")
+            pass
         elif opcion == "3":
             pass
         elif opcion == "4":

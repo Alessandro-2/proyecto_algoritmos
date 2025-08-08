@@ -77,7 +77,8 @@ def mostrar_detalles_opcion(obras):
         else:
             print("Error, por favor, ingrese un ID de obra válido o '2' para regresar")
 
-
+#Muestra una lista de nacionalidades
+#El usuario puede seleccionar una para buscar obras por nacionalidad del autor.
 def ver_obras_por_nacionalidad():
 
     nacionalidades=[]
@@ -108,4 +109,112 @@ def ver_obras_por_nacionalidad():
     valor = nacionalidades[indice]
     url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={valor}"
     importar_y_mostrar_ids(url)
+
+#Hace una solicitud a la API usando la URL dada y extrae los IDs de las obras.
+#   Luego llama a mostrar_listado_obras() para presentar los resultados en bloques.
+def importar_y_mostrar_ids(url):
+    respuesta = requests.get(url)
+    try:
+        datos = respuesta.json()
+    except:
+        print("No se pudo procesar la respuesta.")
+        return
+
+    if "objectIDs" not in datos or not datos["objectIDs"]:
+        print("No se encontraron obras.")
+        return
+
+    mostrar_listado_obras(datos["objectIDs"])
+
+
+
+# Muestra obras en bloques de 20. Permite al usuario ver detalles de obras mostradas en cada bloque.
+def mostrar_listado_obras(object_ids):
+    obras_encontradas = []
+    total = len(object_ids)
+    inicio = 0
+
+    while inicio < total:
+        obras_encontradas.clear()
+        print(f"\nMostrando obras {inicio + 1} a {min(inicio + 20, total)} de {total}\n")
+
+        for obj_id in object_ids[inicio:inicio + 20]:
+            obra_data = Catalogo.obtener_datos_de_la_obra(obj_id)
+
+            if not obra_data:
+                print(f"No se pudo cargar la obra con ID {obj_id}")
+                continue
+
+            # Validacion para cada campo
+            if "objectID" in obra_data and obra_data["objectID"] != "":
+                id_obra = obra_data["objectID"]
+            else:
+                id_obra = "N/A"
+
+            if "title" in obra_data and obra_data["title"] != "":
+                titulo = obra_data["title"]
+            else:
+                titulo = "Sin título"
+
+            if "artistDisplayName" in obra_data and obra_data["artistDisplayName"] != "":
+                autor = obra_data["artistDisplayName"]
+            else:
+                autor = "Desconocido"
+
+            if "artistNationality" in obra_data and obra_data["artistNationality"] != "":
+                nacionalidad = obra_data["artistNationality"]
+            else:
+                nacionalidad = "N/A"
+
+            if "artistBeginDate" in obra_data and obra_data["artistBeginDate"] != "":
+                nacimiento = obra_data["artistBeginDate"]
+            else:
+                nacimiento = "N/A"
+
+            if "artistEndDate" in obra_data and obra_data["artistEndDate"] != "":
+                fallecimiento = obra_data["artistEndDate"]
+            else:
+                fallecimiento = "N/A"
+
+            if "classification" in obra_data and obra_data["classification"] != "":
+                tipo = obra_data["classification"]
+            else:
+                tipo = "N/A"
+
+            if "objectDate" in obra_data and obra_data["objectDate"] != "":
+                fecha = obra_data["objectDate"]
+            else:
+                fecha = "N/A"
+
+            if "primaryImage" in obra_data and obra_data["primaryImage"] != "":
+                imagen = obra_data["primaryImage"]
+            else:
+                imagen = "N/A"
+
+            # Crear objeto obra con la info validada
+            obra = Obra(
+                id=id_obra,
+                titulo=titulo,
+                autor=autor,
+                nacionalidad=nacionalidad,
+                nacimiento=nacimiento,
+                fallecimiento=fallecimiento,
+                tipo=tipo,
+                fecha_creacion=fecha,
+                imagen_url=imagen
+            )
+
+            obras_encontradas.append(obra)
+            print(f"ID: {obra.id}, Título: {obra.titulo}, Autor: {obra.autor}")
+
+        if obras_encontradas:
+            mostrar_detalles_opcion(obras_encontradas)
+        else:
+            print("No se encontraron obras para mostrar.")
+
+        inicio += 20
+        if inicio < total:
+            continuar = input("¿Desea ver más obras? (s/n): ")
+            if continuar.lower() != "s":
+                break
 
