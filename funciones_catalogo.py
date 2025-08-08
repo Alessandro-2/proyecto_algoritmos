@@ -87,3 +87,20 @@ def ver_obras_por_autor():
     url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}"
     importar_y_mostrar_ids(url)
     
+# Hace una solicitud a la API usando la URL dada y extrae los IDs de las obras.
+# Luego llama a mostrar_listado_obras() para presentar los resultados en bloques. 
+def importar_y_mostrar_ids(url):
+    respuesta = requests.get(url)
+    try:
+        datos = respuesta.json()
+    except:
+        print("No se pudo procesar la respuesta.")
+        return
+    
+    if "objectIDs" not in datos or not datos["objectIDs"]:
+        print("No se encontraron obras.")
+        return
+    
+    mostrar_listado_obras(datos["objectIDs"])
+
+
