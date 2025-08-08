@@ -21,7 +21,7 @@ def main():
             funciones_catalogo.ver_obras_por_autor()
         elif opcion == "4":
             print()
-            print("Saliendo del sistema...")
+            print("Saliendo del sistema...")    
             print()
             break
         else:
