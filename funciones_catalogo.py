@@ -104,3 +104,29 @@ def importar_y_mostrar_ids(url):
     mostrar_listado_obras(datos["objectIDs"])
 
 
+def mostrar_detalles_opcion(obras):
+
+    while True:
+        print()
+        opcion_detalles = input("Ingrese el ID de la obra para ver detalles (o escriba 'volver' para regresar): ")
+
+        if opcion_detalles.lower() == "volver":
+            print()
+            break
+
+        obra_seleccionada = None
+        for obra in obras:
+            if str(obra.id) == opcion_detalles:
+                obra_seleccionada = obra
+                break
+        
+        if obra_seleccionada:
+            obra_seleccionada.mostrar_detalles()
+        else:
+            print("Error, por favor, ingrese un ID válido.")
+
+        print()
+        seguir = input("¿Desea ver otra obra de este grupo? (s/n): ")
+        if seguir.lower() != "s":
+            break
+
