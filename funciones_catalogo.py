@@ -76,3 +76,14 @@ def mostrar_detalles_opcion(obras):
             
         else:
             print("Error, por favor, ingrese un ID de obra válido o '2' para regresar")
+
+# Solicita al usuario un nombre de autor y muestra obras relacionadas.
+def ver_obras_por_autor():
+    nombre=input("Ingrese el nombre del autor: ").strip()
+    if nombre == "":
+        print("Nombre vacío.")
+        return
+    
+    url = f"https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q={nombre}"
+    importar_y_mostrar_ids(url)
+    
